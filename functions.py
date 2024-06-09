@@ -1,3 +1,6 @@
+from algorithms import *
+
+
 # максимально смешное условие, которое можно двояко интерпретировать
 # решение соответствует условию
 def TimeRounding(hours: int, minutes: int, seconds: int) -> str:
@@ -43,3 +46,22 @@ def ReplacingArrayElements(array: list, countFirstNumbers: int) -> None:
 
     for ind in range(0, lengthArray):
         array[ind] = firstNumsAverage
+
+
+# гнилое задание, написаное поверхностными словами
+def CalculateCoefCompositionPolynomial():
+    pass
+
+
+# более-менее норм задачка, в которой просто нужно в алгом
+def SearchLargestArithOrGeomProgression(array: list) -> int:
+    arrayLength: int = len(array)
+
+    if arrayLength <= 2:
+        return arrayLength
+
+    largestArith: int = SearchLargestProgression(array, arrayLength, True)
+    largestGeom: int = SearchLargestProgression(array, arrayLength, False)
+    largestProgression: int = max(largestArith, largestGeom)
+
+    return largestProgression

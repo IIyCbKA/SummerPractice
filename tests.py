@@ -57,11 +57,37 @@ def test_ReplacingArrayElements():
     assert thirdArray == [1, 2, 3, 4, 5]
 
 
+def test_CalculateCoefCompositionPolynomial():
+    pass
+
+
+def test_SearchLargestArithOrGeomProgression():
+    firstArray: list = [1, 3, 5, 7, 9]
+    assert SearchLargestArithOrGeomProgression(firstArray) == 5
+
+    secondArray: list = [2, 1, 3, 5, 9]
+    assert SearchLargestArithOrGeomProgression(secondArray) == 3
+
+    thirdArray: list = [2, 4, 1, 3, 9, 27, 7]
+    assert SearchLargestArithOrGeomProgression(thirdArray) == 4
+
+    fourthArray: list = [3, 4, 11, 2]
+    assert SearchLargestArithOrGeomProgression(fourthArray) == 2
+
+    fifthArray: list = [1, 2, 4, 8, 16]
+    assert SearchLargestArithOrGeomProgression(fifthArray) == 5
+
+    sixthArray: list = [1, 12]
+    assert SearchLargestArithOrGeomProgression(sixthArray) == 2
+
+
 def allTests():
     test_TimeRounding()
     test_ReturnAgeText()
     test_CalculateAgeDeathForest()
     test_ReplacingArrayElements()
+    test_CalculateCoefCompositionPolynomial()
+    test_SearchLargestArithOrGeomProgression()
 
 
 allTests()
