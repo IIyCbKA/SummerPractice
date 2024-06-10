@@ -76,3 +76,20 @@ def SearchNaturalNumsWithSortedDigits(limit: int) -> int:
         countRightNums += FindRightNums(str(startNum), limit, None)
 
     return countRightNums
+
+
+# не совсем понятное условие без примеров, решение методом тыка (вроде так)
+def FindMedianXY(arrayDots: list):
+    lengthArray: int = len(arrayDots)
+    halfLength: int = lengthArray // 2
+    arrayResult: list = []
+
+    # горизонтальная
+    sortedArraysByIndexAndAddResult(arrayDots, arrayResult, lengthArray,
+                                    halfLength, 0)
+
+    # вертикальная
+    sortedArraysByIndexAndAddResult(arrayDots, arrayResult, lengthArray,
+                                    halfLength, 1)
+
+    return arrayResult

@@ -101,6 +101,24 @@ def test_SearchNaturalNumsWithSortedDigits():
     assert SearchNaturalNumsWithSortedDigits(fifthLimit) == 1458
 
 
+def test_FindMedianXY():
+    # формат координат [x, y]
+    firstDots: list = [[3, 4], [1, 2], [7, 8], [5, 6]]
+    assert FindMedianXY(firstDots) == [4.00, 5.00]
+
+    secondDots: list = [[4, 6], [1, 7], [10, 20], [11, 13], [18, 26]]
+    assert FindMedianXY(secondDots) == [10.00, 13.00]
+
+    thirdDots: list = [[10, 20]]
+    assert FindMedianXY(thirdDots) == [10.00, 20.00]
+
+    fourthDots: list = [[4.5, 5.4], [1.1, 7.2], [11.3, 5.4], [12.3, 7.7]]
+    assert FindMedianXY(fourthDots) == [7.90, 6.30]
+
+    fifthDots: list = []
+    assert FindMedianXY(fifthDots) == []
+
+
 def allTests():
     test_TimeRounding()
     test_ReturnAgeText()
@@ -109,6 +127,7 @@ def allTests():
     test_CalculateCoefCompositionPolynomial()
     test_SearchLargestArithOrGeomProgression()
     test_SearchNaturalNumsWithSortedDigits()
+    test_FindMedianXY()
 
 
 allTests()

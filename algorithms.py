@@ -35,3 +35,15 @@ def FindRightNums(num: str, limit: int, isIncreasing: bool | None) -> int:
             for nextDigit in range(0, int(num[-1])):
                 result += FindRightNums(num + str(nextDigit), limit, False)
         return result
+
+
+def sortedArraysByIndexAndAddResult(arrayDots: list, arrayResult: list,
+                                    lengthArray: int, halfLength: int,
+                                    keyInd: int) -> None:
+    arrayDots.sort(key=lambda x: x[keyInd])
+
+    if (lengthArray % 2 == 0) and (lengthArray >= 2):
+        arrayResult.append(round((arrayDots[halfLength][keyInd] +
+                                  arrayDots[halfLength - 1][keyInd]) / 2, 2))
+    elif (lengthArray % 2 != 0) and (lengthArray >= 1):
+        arrayResult.append(arrayDots[halfLength][keyInd])
