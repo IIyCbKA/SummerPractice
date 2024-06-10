@@ -14,3 +14,24 @@ def SearchLargestProgression(array: list, length: int, isArith: bool) -> int:
     largest = max(largest, currentLength)
 
     return largest
+
+
+def FindRightNums(num: str, limit: int, isIncreasing: bool | None) -> int:
+    numGreaterLimit: bool = (int(num) > limit)
+    numIsStrictlyIncreasing: bool = (
+        len(num) > 1 and int(num[-1]) <= int(num[-2])) if isIncreasing \
+        else len(num) > 1 and int(num[-1]) >= int(num[-2])
+    numIsBig: bool = len(num) > 10
+
+    if numGreaterLimit or numIsStrictlyIncreasing or numIsBig:
+        return 0
+
+    else:
+        result: int = 1
+        if isIncreasing or isIncreasing is None:
+            for nextDigit in range(int(num[-1]), 10):
+                result += FindRightNums(num + str(nextDigit), limit, True)
+        if not isIncreasing or isIncreasing is None:
+            for nextDigit in range(0, int(num[-1])):
+                result += FindRightNums(num + str(nextDigit), limit, False)
+        return result

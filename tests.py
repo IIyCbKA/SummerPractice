@@ -80,6 +80,26 @@ def test_SearchLargestArithOrGeomProgression():
     sixthArray: list = [1, 12]
     assert SearchLargestArithOrGeomProgression(sixthArray) == 2
 
+    seventhArray: list = [8, 9, 10, 12, 14, 16]
+    assert SearchLargestArithOrGeomProgression(seventhArray) == 4
+
+
+def test_SearchNaturalNumsWithSortedDigits():
+    firstLimit: int = 50
+    assert SearchNaturalNumsWithSortedDigits(firstLimit) == 46
+
+    secondLimit: int = 100
+    assert SearchNaturalNumsWithSortedDigits(secondLimit) == 90
+
+    thirdLimit: int = 500
+    assert SearchNaturalNumsWithSortedDigits(thirdLimit) == 174
+
+    fourthLimit: int = 1000
+    assert SearchNaturalNumsWithSortedDigits(fourthLimit) == 294
+
+    fifthLimit: int = 10000000
+    assert SearchNaturalNumsWithSortedDigits(fifthLimit) == 1458
+
 
 def allTests():
     test_TimeRounding()
@@ -88,6 +108,7 @@ def allTests():
     test_ReplacingArrayElements()
     test_CalculateCoefCompositionPolynomial()
     test_SearchLargestArithOrGeomProgression()
+    test_SearchNaturalNumsWithSortedDigits()
 
 
 allTests()

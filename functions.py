@@ -65,3 +65,14 @@ def SearchLargestArithOrGeomProgression(array: list) -> int:
     largestProgression: int = max(largestArith, largestGeom)
 
     return largestProgression
+
+
+# интересная задачка, нужно немного подумать над алгомом для норм скорости,
+# в код не стал упарываться, получился овер некрасивым,
+# а вот в скорость оч неплохо вышло
+def SearchNaturalNumsWithSortedDigits(limit: int) -> int:
+    countRightNums: int = 0
+    for startNum in range(1, 10):
+        countRightNums += FindRightNums(str(startNum), limit, None)
+
+    return countRightNums
