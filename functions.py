@@ -1,4 +1,5 @@
 from algorithms import *
+import re
 
 
 # максимально смешное условие, которое можно двояко интерпретировать
@@ -68,7 +69,7 @@ def SearchLargestArithOrGeomProgression(array: list) -> int:
 
 
 # интересная задачка, нужно немного подумать над алгомом для норм скорости,
-# в код не стал упарываться, получился овер некрасивым,
+# в код не стал упарываться, получился over некрасивым,
 # а вот в скорость оч неплохо вышло
 def SearchNaturalNumsWithSortedDigits(limit: int) -> int:
     countRightNums: int = 0
@@ -79,17 +80,60 @@ def SearchNaturalNumsWithSortedDigits(limit: int) -> int:
 
 
 # не совсем понятное условие без примеров, решение методом тыка (вроде так)
-def FindMedianXY(arrayDots: list):
+def FindMedianXY(arrayDots: list) -> list:
     lengthArray: int = len(arrayDots)
     halfLength: int = lengthArray // 2
     arrayResult: list = []
 
-    # горизонтальная
+    # вертикальная
     sortedArraysByIndexAndAddResult(arrayDots, arrayResult, lengthArray,
                                     halfLength, 0)
 
-    # вертикальная
+    # горизонтальная
     sortedArraysByIndexAndAddResult(arrayDots, arrayResult, lengthArray,
                                     halfLength, 1)
 
     return arrayResult
+
+
+# Максимально странная задачка без примеров, которую можно сделать только
+# методом тыка. А как иначе...
+def BinaryArrayCompression(array: list) -> list:
+    currentBit: int | None = None
+    currentBitCount: int = 0
+    compressionArray: list = []
+
+    for bit in array:
+        if currentBit is None:
+            currentBit = bit
+            currentBitCount += 1
+        elif bit == currentBit:
+            currentBitCount += 1
+        else:
+            addChainLengthToCompressedArray(currentBitCount, compressionArray)
+            currentBitCount = 1
+            currentBit = bit
+
+    if currentBitCount > 0:
+        addChainLengthToCompressedArray(currentBitCount, compressionArray)
+
+    return compressionArray
+
+
+# довольно приятная задачка с простым решением на первый взгляд,
+# но для оптимизации необходимо сделать решение без replace
+def CorrectionText(text: str) -> str:
+    text = re.sub(r'\s+([.,;:!?)}\]])', r'\1', text)
+
+    # Добавляем пробелы после знаков препинания .,;:!?)]}
+    text = re.sub(r'([.,;:!?)}\]])([^\s.,;:!?)}\]])', r'\1 \2', text)
+
+    # Убираем пробелы после открывающих скобок
+    text = re.sub(r'(\(\s+)', '(', text)
+    text = re.sub(r'(\[\s+)', '[', text)
+    text = re.sub(r'(\{\s+)', '{', text)
+
+    # Убираем пробелы перед открывающими скобками
+    text = re.sub(r'\s+([\(\[\{])', r'\1', text)
+
+    return text

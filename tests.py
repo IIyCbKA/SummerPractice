@@ -119,6 +119,37 @@ def test_FindMedianXY():
     assert FindMedianXY(fifthDots) == []
 
 
+def test_BinaryArrayCompression():
+    firstArray: list = [1, 1, 1, 0, 0, 1]
+    assert BinaryArrayCompression(firstArray) == [3, 2, 1]
+
+    secondArray: list = [1, 0, 1, 0, 1, 0]
+    assert BinaryArrayCompression(secondArray) == [1, 1, 1, 1, 1, 1]
+
+    thirdArray: list = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0]
+    assert BinaryArrayCompression(thirdArray) == [15, 0, 2]
+
+    fourthArray: list = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1]
+    assert BinaryArrayCompression(fourthArray) == [15, 2, 1, 1]
+
+    fifthArray: list = []
+    assert BinaryArrayCompression(fifthArray) == []
+
+
+def test_CorrectionText():
+    firstText: str = '( Привет, Андрей ) , - говорил он'
+    assert CorrectionText(firstText) == '(Привет, Андрей), - говорил он'
+
+    secondText: str = '(Да \n? Ты в этом уверен ? )'
+    assert CorrectionText(secondText) == '(Да? Ты в этом уверен?)'
+
+    thirdText: str = '( ( Проверю на скобках ) )'
+    assert CorrectionText(thirdText) == '((Проверю на скобках))'
+
+    fourthText: str = ''
+    assert CorrectionText(fourthText) == ''
+
+
 def allTests():
     test_TimeRounding()
     test_ReturnAgeText()
@@ -128,6 +159,8 @@ def allTests():
     test_SearchLargestArithOrGeomProgression()
     test_SearchNaturalNumsWithSortedDigits()
     test_FindMedianXY()
+    test_BinaryArrayCompression()
+    test_CorrectionText()
 
 
 allTests()

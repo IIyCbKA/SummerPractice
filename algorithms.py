@@ -47,3 +47,22 @@ def sortedArraysByIndexAndAddResult(arrayDots: list, arrayResult: list,
                                   arrayDots[halfLength - 1][keyInd]) / 2, 2))
     elif (lengthArray % 2 != 0) and (lengthArray >= 1):
         arrayResult.append(arrayDots[halfLength][keyInd])
+
+
+def addChainLengthToCompressedArray(chainLength: int,
+                                    compressedArray: list) -> None:
+    if chainLength < 15:
+        compressedArray.append(chainLength)
+    elif chainLength == 15:
+        compressedArray.append(chainLength)
+        compressedArray.append(0)
+    else:
+        numAdd: int = 0
+        while chainLength > 0:
+            if chainLength >= 15:
+                numAdd = 15
+            else:
+                numAdd = chainLength
+
+            chainLength -= numAdd
+            compressedArray.append(numAdd)
