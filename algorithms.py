@@ -57,7 +57,6 @@ def addChainLengthToCompressedArray(chainLength: int,
         compressedArray.append(chainLength)
         compressedArray.append(0)
     else:
-        numAdd: int = 0
         while chainLength > 0:
             if chainLength >= 15:
                 numAdd = 15

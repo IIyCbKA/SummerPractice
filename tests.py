@@ -57,8 +57,26 @@ def test_ReplacingArrayElements():
     assert thirdArray == [1, 2, 3, 4, 5]
 
 
-def test_CalculateCoefCompositionPolynomial():
-    pass
+def test_ComposePolynomals():
+    firstPolyP: list = [2, 0, -5]
+    firstPolyQ: list = [1, -1, 2]
+    assert ComposePolynomals(firstPolyP, firstPolyQ) == [2, -4, 10, -8, 3]
+
+    secondPolyP: list = [1, 2]
+    secondPolyQ: list = [2, -5]
+    assert ComposePolynomals(secondPolyP, secondPolyQ) == [2, -3]
+
+    thirdPolyP: list = [1]
+    thirdPolyQ: list = [2, 0, 11]
+    assert ComposePolynomals(thirdPolyP, thirdPolyQ) == [1]
+
+    fourthPolyP: list = []
+    fourthPolyQ: list = [2, 0, 11]
+    assert ComposePolynomals(fourthPolyP, fourthPolyQ) == []
+
+    fifthPolyP: list = [2, 0, 11]
+    fifthPolyQ: list = []
+    assert ComposePolynomals(fifthPolyP, fifthPolyQ) == [11]
 
 
 def test_SearchLargestArithOrGeomProgression():
@@ -155,7 +173,7 @@ def allTests():
     test_ReturnAgeText()
     test_CalculateAgeDeathForest()
     test_ReplacingArrayElements()
-    test_CalculateCoefCompositionPolynomial()
+    test_ComposePolynomals()
     test_SearchLargestArithOrGeomProgression()
     test_SearchNaturalNumsWithSortedDigits()
     test_FindMedianXY()

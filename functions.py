@@ -1,4 +1,5 @@
 from algorithms import *
+import numpy as np
 import re
 
 
@@ -49,9 +50,22 @@ def ReplacingArrayElements(array: list, countFirstNumbers: int) -> None:
         array[ind] = firstNumsAverage
 
 
-# гнилое задание, написаное поверхностными словами
-def CalculateCoefCompositionPolynomial():
-    pass
+# Гнилое задание, сильный упор в мат, хотя информации в интернете очень мало.
+# Хорошо, что есть numpy...
+def ComposePolynomals(coefsP: list, coefsQ: list) -> list:
+    lengthArrayCoefsP: int = len(coefsP)
+    lengthArrayCoefsQ: int = len(coefsQ)
+
+    if lengthArrayCoefsP == 0:
+        return []
+    elif lengthArrayCoefsQ == 0:
+        return [coefsP[-1]]
+    else:
+        PolynomalP = np.poly1d(coefsP)
+        PolynomalQ = np.poly1d(coefsQ)
+        composedPolynomal = PolynomalP(PolynomalQ)
+
+        return composedPolynomal.coefficients.tolist()
 
 
 # более-менее норм задачка, в которой просто нужно в алгом
