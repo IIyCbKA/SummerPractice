@@ -52,7 +52,7 @@ def ReplacingArrayElements(array: list, countFirstNumbers: int) -> None:
 
 # Гнилое задание, сильный упор в мат, хотя информации в интернете очень мало.
 # Хорошо, что есть numpy...
-def ComposePolynomals(coefsP: list, coefsQ: list) -> list:
+def ComposePolynoms(coefsP: list, coefsQ: list) -> list:
     lengthArrayCoefsP: int = len(coefsP)
     lengthArrayCoefsQ: int = len(coefsQ)
 
@@ -61,11 +61,11 @@ def ComposePolynomals(coefsP: list, coefsQ: list) -> list:
     elif lengthArrayCoefsQ == 0:
         return [coefsP[-1]]
     else:
-        PolynomalP = np.poly1d(coefsP)
-        PolynomalQ = np.poly1d(coefsQ)
-        composedPolynomal = PolynomalP(PolynomalQ)
+        PolynomP = np.poly1d(coefsP)
+        PolynomQ = np.poly1d(coefsQ)
+        composedPolynom = PolynomP(PolynomQ)
 
-        return composedPolynomal.coefficients.tolist()
+        return composedPolynom.coefficients.tolist()
 
 
 # более-менее норм задачка, в которой просто нужно в алгом
