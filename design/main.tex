@@ -1,0 +1,97 @@
+\documentclass{report}
+
+% Подключаем необходимые библиотеки. %
+\usepackage[russian]{babel}
+\usepackage{geometry}
+\usepackage{minted}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\usepackage{xspace}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{setspace}
+\usepackage{makecell}
+\usepackage{float}
+\usepackage{amsmath}
+
+\counterwithout{figure}{chapter}
+
+\usetikzlibrary{shapes, arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{calc}
+\usetikzlibrary{chains}
+
+% Предопределяем типы блок-схем.
+\tikzstyle{terminator} = [rectangle, draw, text centered, rounded corners, minimum height=2em]
+\tikzstyle{process} = [rectangle, draw, text centered, minimum height=2em]
+\tikzstyle{decision} = [diamond, draw, text centered, minimum height=2em]
+\tikzstyle{data}=[trapezium, draw, text centered, trapezium left angle=60, trapezium right angle=120, minimum height=2em]
+\tikzstyle{cycle}=[chamfered rectangle, draw, text centered,chamfered rectangle xsep=10pt ]
+\tikzstyle{connector} = [draw, -latex']
+
+% Убираем отступ надписи <<Оглавление>>. %
+\setlength{\cftbeforetoctitleskip}{0pt}
+\setlength{\cftaftertoctitleskip}{2pt}
+% Форматируем надпись оглавление. %
+\renewcommand{\cfttoctitlefont}{\LARGE\bfseries}
+
+\titleformat{\chapter}{\normalfont\LARGE\bfseries}{\thechapter}{20pt}{\LARGE\bfseries}
+\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+
+% Настраиваем колонтикулы. %
+\pagestyle{fancy}
+% Очистить текущие заголовки и нижние колонтитулы. %
+\fancyhf{}
+% Номер страницы в центре нижнего колонтитула. %
+\fancyfoot[C]{\thepage}
+% Убрать линию между заголовком и текстом. %
+\renewcommand{\headrulewidth}{0pt}
+% Убрать линию между текстом и нижним колонтитулом. %
+\renewcommand{\footrulewidth}{0pt}
+
+% Создаем цвета. %
+\definecolor{pybg}{rgb}{0.95,0.95,0.95}
+
+% Устанавливаем необходимые поля. %
+\geometry{left=3cm}
+\geometry{right=1.5cm}
+\geometry{top=2cm}
+\geometry{bottom=2cm}
+
+% Сетапим форматирование кода в документе. %
+\newminted[mycode]{python}{
+	bgcolor=pybg,
+	baselinestretch=1.2,
+	fontsize=\normalsize,
+	tabsize=0,
+	linenos
+}
+
+% Создадим команду для отрисовки изображения. %
+% \newimage{имя_файла}{ширина}{заголовок_картинки}
+\newcommand{\includeimage}[3]{
+	\begin{figure}[H]
+		%\begin{center}
+		\centering
+			\includegraphics[width=#2\textwidth]{#1}
+			\caption{#3}
+		%\end{center}
+	\end{figure}
+}
+
+\begin{document}
+	\thispagestyle{empty}
+
+	\input{title}
+
+	\begin{onehalfspacing}
+		\input{tasks} \newpage
+
+	\end{onehalfspacing}
+\end{document}
