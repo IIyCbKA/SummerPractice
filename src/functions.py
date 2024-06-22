@@ -6,10 +6,11 @@ import re
 # максимально смешное условие, которое можно двояко интерпретировать
 # решение соответствует условию
 def TimeRounding(hours: int, minutes: int, seconds: int) -> str:
-    if minutes >= 30:
-        return f'{hours + 1} ч'
-    else:
-        return f'{hours} ч'
+    only_hours: str = f'{hours + 1 if minutes >= 30 else hours} ч'
+    hours_with_minutes: str = f'{hours} ч {minutes + 1 if seconds >= 30 else minutes} м'
+    result: str = f'{hours_with_minutes} или {only_hours}'
+
+    return result
 
 
 # опять задачка со смешным условием и не менее смешным решением...

@@ -3,10 +3,10 @@ from functions import *
 
 def test_TimeRounding():
     firstInput: list = [14, 21, 45]
-    assert TimeRounding(*firstInput) == '14 ч'
+    assert TimeRounding(*firstInput) == '14 ч 22 м или 14 ч'
 
     secondInput: list = [9, 59, 23]
-    assert TimeRounding(*secondInput) == '10 ч'
+    assert TimeRounding(*secondInput) == '9 ч 59 м или 10 ч'
 
 
 def test_ReturnAgeText():
