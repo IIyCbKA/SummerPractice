@@ -1,4 +1,3 @@
-%\setcounter{chapter}{2}
 \chapter{Основная часть}
 \section{Тема 1. Линейные алгоритмы. Задание 23.}
 \label{sec:task1}
@@ -51,12 +50,13 @@
 	\begin{item}
 		Код \textit{алгоритма} на языке \textit{Python}:
 		\begin{mycode}
-			def TimeRounding(hours: int, minutes: int, seconds: int) -> str:
-              only_hours: str = f'{hours + 1 if minutes >= 30 else hours} ч'
-              hours_with_minutes: str = f'{hours} ч {minutes + 1 if seconds >= 30 else minutes} м'
-              result: str = f'{hours_with_minutes} или {only_hours}'
+def TimeRounding(hours: int, minutes: int, seconds: int) -> str:
+    only_hours: str = f'{hours + 1 if minutes >= 30 else hours} ч'
+    hours_with_minutes: str = \
+        f'{hours} ч {minutes + 1 if seconds >= 30 else minutes} м'
+    result: str = f'{hours_with_minutes} или {only_hours}'
 
-              return result
+    return result
 		\end{mycode}
 	\end{item}
 	\begin{item}
