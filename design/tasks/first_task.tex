@@ -1,0 +1,80 @@
+%\setcounter{chapter}{2}
+\chapter{Основная часть}
+\section{Тема 1. Линейные алгоритмы. Задание 23.}
+\label{sec:task1}
+
+\begin{enumerate}
+	\item\largeТекущее время (часы, минуты, секунды) задано тремя переменными: \textit{h, m, s}. Округлить его до целых значений минут и часов. Например, 14 ч 21 мин 45 с преобразуется в 14 ч 22 мин или 14 ч, а 9 ч 59 мин 23 с — соответственно в 9 ч 59 мин или 10 ч.
+	\begin{item}
+		Словесное описание \textit{алгоритма}:
+
+		\begin{enumerate}
+			\item\largeЗнаем, что в одном часе 60 минут, а в одной минуте 60 секунд. Будем придерживаться принципа округления - если количество секунд $<50\%$, тогда округляем количество минут в меньшую сторону, иначе - в большую. С минутами в часах будем действовать по тому же принципу.
+			\item\largeИсходя из вышесказанного, если количество секунд $<30$, тогда округляем минуты в меньшую сторону, иначе - в большую. С минутами в часах действуем по тому же принципу.
+		\end{enumerate}
+	\end{item}
+	\begin{item}
+		Спецификация функции \textit{TimeRounding}:
+		\begin{enumerate}
+			\itemЗаголовок: \colorbox{pybg}{\textit{def} TimeRounding(hours: int, minutes: int, seconds: int) -> str:}
+			\itemНазначение: используется для нахождения целого числа минут и часов или только часов по введенному времени.
+		\end{enumerate}
+		Блок-схема:
+		\begin{center}
+			\begin{tikzpicture}[node distance=1.2cm]
+				\node (start) [terminator]
+				{\textit{def} TimeRounding(hours: int, minutes: int, seconds: int)};
+
+				\node (compute_only_hours) [process, below of=start, yshift=-0.7cm]
+				{\begin{tabular}{c}Приведем переменную \textbf{hours} к строковому виду с округлением по минутам \\ из переменной \textbf{minutes}, с сохранением результата в переменную \textbf{only\_hours}\end{tabular}};
+
+				\node (compute_hours_with_minutes) [process, below of=compute_only_hours, yshift=-1.2cm]
+				{\begin{tabular}{c}Приведем переменные \textbf{hours} и \textbf{minutes} к строковому \\ виду с округлением по секундам из переменной \textbf{seconds}, \\ с сохранением результата в переменную \textbf{hours\_with\_minutes}\end{tabular}};
+
+				\node (compute_result) [process, below of=compute_hours_with_minutes, yshift=-1.2cm]
+				{\begin{tabular}{c}Объединим переменные \textbf{only\_hours} и \textbf{hours\_with\_minutes} \\ и запишем результат в переменную \textbf{result}\end{tabular}};
+
+				\node (return) [data, below of=compute_result, yshift=-0.4cm]
+				{Возврат result};
+
+				\node (stop) [terminator, below of=return]
+				{Конец};
+
+				\path [connector] (start) -- (compute_only_hours);
+				\path [connector] (compute_only_hours) -- (compute_hours_with_minutes);
+				\path [connector] (compute_hours_with_minutes) -- (compute_result);
+				\path [connector] (compute_result) -- (return);
+				\path [connector] (return) -- (stop);
+			\end{tikzpicture}
+		\end{center}
+	\end{item}
+	\begin{item}
+		Код \textit{алгоритма} на языке \textit{Python}:
+		\begin{mycode}
+			def TimeRounding(hours: int, minutes: int, seconds: int) -> str:
+              only_hours: str = f'{hours + 1 if minutes >= 30 else hours} ч'
+              hours_with_minutes: str = f'{hours} ч {minutes + 1 if seconds >= 30 else minutes} м'
+              result: str = f'{hours_with_minutes} или {only_hours}'
+
+              return result
+		\end{mycode}
+	\end{item}
+	\begin{item}
+		\hfill \textit{Таблица 1}
+
+		\centering\textbf{Тестовые данные}
+
+		\begin{table}[h]
+			\begin{center}
+				\begin{large}
+					\begin{tabularx}{\textwidth}{>{\vspace{1pt}}X<{\vspace{4pt}}|>{\vspace{1pt}}X<{\vspace{4pt}}}
+						\hline
+						Входные данные & Выходные данные \\ \hline
+						\makecell[l]{Поданное время [14, 21, 45]} & \makecell[l]{14 ч 22 м или 14 ч} \\ \hline
+						\makecell[l]{Поданное время [9, 59, 23]} & \makecell[l]{9 ч 59 м или 10 ч} \\ \hline
+					\end{tabularx}
+				\end{large}
+			\end{center}
+		\end{table}
+	\end{item}
+\end{enumerate}

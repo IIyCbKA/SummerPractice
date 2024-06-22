@@ -2,6 +2,7 @@
 
 % Подключаем необходимые библиотеки. %
 \usepackage[russian]{babel}
+\usepackage[utf8]{inputenc}
 \usepackage{geometry}
 \usepackage{minted}
 \usepackage[hidelinks]{hyperref}
@@ -91,7 +92,9 @@
 	\input{title}
 
 	\begin{onehalfspacing}
-		\input{tasks} \newpage
+		\input{list_tasks} \newpage
+
+		\input{tasks/first_task} \newpage
 
 	\end{onehalfspacing}
 \end{document}
