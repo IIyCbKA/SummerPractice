@@ -1,0 +1,109 @@
+\section{Тема 2. Разветвляющиеся алгоритмы. Задание 23.}
+\label{sec:task2}
+
+\begin{enumerate}
+	\item\largeДля заданного 0 < \textit{n} $\leq$ 200, рассматриваемого как возраст человека, вывести фразу вида: «Мне 21 год», «Мне 32 года», «Мне 12 лет».
+	\begin{item}
+		Словесное описание \textit{алгоритма}:
+
+		\begin{enumerate}
+			\item\largeЕсли $n \% 10 = 0$, $n \% 10 \geq 5$ или $10 \leq n \leq 20$ - мы пишем «лет». Если \textit{n} оканчивается на 1, при этом $n \neq 11$, тогда мы пишем «год». В остальных случаях мы пишем «года».
+			\item\largeИсходя из вышесказанного, запишем условия для получения правильной формы слова.
+			\item\largeПолучив правильную форму слова, объединим ее с шаблоном предложения.
+		\end{enumerate}
+	\end{item}
+	\begin{item}
+		Спецификация функции \textit{ReturnAgeText}:
+		\begin{enumerate}
+			\itemЗаголовок: \colorbox{pybg}{\textit{def} ReturnAgeText(age: int) -> str}
+			\itemНазначение: используется для нахождения правильной формы слова «лет», обозначающего возраст, в шаблон «Мне \textit{n} лет».
+		\end{enumerate}
+		\newpage
+		Блок-схема:
+		\begin{center}
+			\begin{tikzpicture}[node distance=1.2cm]
+				\node (start) [terminator]
+				{\textit{def} ReturnAgeText(age: int)};
+
+                \node (if)[decision, below of=start, node distance = 4cm]
+                {\begin{tabular}{c}$0 < age \% 100 < 20$ \\ or $age \% 10 >= 5$ \\ or $age \% 10 = 0$\end{tabular}};
+
+                \node (if_true)[process, below right = 1cm of if]
+                {correctForm := «лет»};
+
+				\node (second_if)[decision, below left = 2cm of if, yshift = 1cm, xshift = -0.5cm]
+				{$age \% 10 = 1$};
+
+                \node (second_if_true)[process, below right = 0.7cm of second_if]
+                {correctForm := «год»};
+
+				\node (second_if_false)[process, below left = 0.7cm of second_if]
+				{correctForm := «года»};
+
+				\node (result)[process, below of = if, node distance = 7cm]
+				{\begin{tabular}{c}Объединим правильную форму слова с шаблоном, \\ результат запишем в перменную \textbf{result}\end{tabular}};
+
+				\node (return) [data, below of=result, yshift=-0.4cm]
+				{Возврат result};
+
+				\node (stop) [terminator, below of=return]
+				{Конец};
+
+                \node at($(if) - (3.5, -0.4)$){\bf--};
+				\node at($(if) - (-3.5, -0.4)$){\bf+};
+                \node at($(second_if) - (2.4, -0.4)$){\bf--};
+				\node at($(second_if) - (-2.4, -0.4)$){\bf+};
+
+				\path [connector] (start) -- (if);
+				\path [connector] (if.east) -- ++(1, 0) -| (if_true.north);
+				\path [connector] (if.west) -- ++(-1, 0) -| (second_if.north);
+				\path [connector] (second_if.east) -- ++(1.5, 0) -| (second_if_true.north);
+				\path [connector] (second_if.west) -- ++(-1.8, 0) -| (second_if_false.north);
+
+                \path [connector] (if_true) -- ++(0, -3) -| (result.north);
+                \path [connector] (second_if_false) -- ++(0, -1) -- ++(3.5, 0) -- ++(0, -0.245) -| (result.north);
+                \path [connector] (second_if_true) -- ++(0, -1) -- ++(-3.39, 0) -- ++(0, -0.245) -| (result.north);
+
+                \path [connector] (result) -- (return);
+                \path [connector] (return) -- (stop);
+			\end{tikzpicture}
+		\end{center}
+	\end{item}
+	\begin{item}
+		Код \textit{алгоритма} на языке \textit{Python}:
+		\begin{mycode}
+def ReturnAgeText(age: int) -> str:
+    if (10 < age % 100 < 20) or (age % 10 >= 5) or (age % 10 == 0):
+        correctForm: str = 'лет'
+    elif age % 10 == 1:
+        correctForm: str = 'год'
+    else:
+        correctForm: str = 'года'
+    answer: str = f'Мне {age} {correctForm}'
+
+    return answer
+		\end{mycode}
+	\end{item}
+	\newpage
+	\begin{item}
+		\hfill \textit{Таблица 1}
+
+		\centering\textbf{Тестовые данные}
+
+		\begin{table}[h]
+			\begin{center}
+				\begin{large}
+					\begin{tabularx}{\textwidth}{>{\vspace{1pt}}X<{\vspace{4pt}}|>{\vspace{1pt}}X<{\vspace{4pt}}}
+						\hline
+						Входные данные & Выходные данные \\ \hline
+						\makecell[l]{11} & \makecell[l]{Мне 11 лет} \\ \hline
+						\makecell[l]{1} & \makecell[l]{Мне 1 год} \\ \hline
+						\makecell[l]{21} & \makecell[l]{Мне 21 год} \\ \hline
+						\makecell[l]{30} & \makecell[l]{Мне 30 лет} \\ \hline
+						\makecell[l]{42} & \makecell[l]{Мне 42 года} \\ \hline
+					\end{tabularx}
+				\end{large}
+			\end{center}
+		\end{table}
+	\end{item}
+\end{enumerate}

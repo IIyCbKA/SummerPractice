@@ -17,11 +17,12 @@ def TimeRounding(hours: int, minutes: int, seconds: int) -> str:
 # опять задачка со смешным условием и не менее смешным решением...
 def ReturnAgeText(age: int) -> str:
     if (10 < age % 100 < 20) or (age % 10 >= 5) or (age % 10 == 0):
-        answer: str = f'Мне {age} лет'
+        correctForm: str = 'лет'
     elif age % 10 == 1:
-        answer: str = f'Мне {age} год'
+        correctForm: str = 'год'
     else:
-        answer: str = f'Мне {age} года'
+        correctForm: str = 'года'
+    answer: str = f'Мне {age} {correctForm}'
 
     return answer
 
