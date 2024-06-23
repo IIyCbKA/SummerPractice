@@ -17,11 +17,13 @@ def TimeRounding(hours: int, minutes: int, seconds: int) -> str:
 # опять задачка со смешным условием и не менее смешным решением...
 def ReturnAgeText(age: int) -> str:
     if (10 < age % 100 < 20) or (age % 10 >= 5) or (age % 10 == 0):
-        return f'Мне {age} лет'
+        answer: str = f'Мне {age} лет'
     elif age % 10 == 1:
-        return f'Мне {age} год'
+        answer: str = f'Мне {age} год'
     else:
-        return f'Мне {age} года'
+        answer: str = f'Мне {age} года'
+
+    return answer
 
 
 # нет уточнения того, что сначала делать - отнимать план или увеличивать площадь
