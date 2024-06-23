@@ -41,19 +41,25 @@ def test_CalculateAgeDeathForest():
 
 
 def test_ReplacingArrayElements():
+    firstArrayLength: int = 5
     firstArray: list = [1, 2, 3, 4, 5]
     first_countFirstNumbers: int = 6
-    ReplacingArrayElements(firstArray, first_countFirstNumbers)
+    ReplacingArrayElements(firstArrayLength, firstArray,
+                           first_countFirstNumbers)
     assert firstArray == [1, 2, 3, 4, 5]
 
+    secondArrayLength: int = 5
     secondArray: list = [1, 2, 3, 4, 5]
     second_countFirstNumbers: int = 3
-    ReplacingArrayElements(secondArray, second_countFirstNumbers)
+    ReplacingArrayElements(secondArrayLength, secondArray,
+                           second_countFirstNumbers)
     assert secondArray == [2, 2, 2, 2, 2]
 
+    thirdArrayLength: int = 5
     thirdArray: list = [1, 2, 3, 4, 5]
     third_countFirstNumbers: int = 0
-    ReplacingArrayElements(thirdArray, third_countFirstNumbers)
+    ReplacingArrayElements(thirdArrayLength, thirdArray,
+                           third_countFirstNumbers)
     assert thirdArray == [1, 2, 3, 4, 5]
 
 

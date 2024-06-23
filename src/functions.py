@@ -39,9 +39,8 @@ def CalculateAgeDeathForest(area: int, growth: int, plan: int) -> int:
 
 
 # странная задачка без логики, никогда не используемая в продуктовых решениях
-def ReplacingArrayElements(array: list, countFirstNumbers: int) -> None:
-    lengthArray: int = len(array)
-
+def ReplacingArrayElements(lengthArray: int, array: list,
+                           countFirstNumbers: int) -> None:
     if (countFirstNumbers > lengthArray) | (countFirstNumbers == 0):
         return
 

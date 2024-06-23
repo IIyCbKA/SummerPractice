@@ -1,0 +1,101 @@
+\section{Тема 4. Простейшие операции над массивами. Задание 23.}
+\label{sec:task4}
+
+\begin{enumerate}
+	\item\largeКаждый из элементов $x_i$ массива \textit{X(n)} заменить средним значением первых \textit{i} элементов этого массива.
+	\begin{item}
+		Словесное описание \textit{алгоритма}:
+
+		\begin{enumerate}
+			\item\largeДля того, чтобы заменить каждый элемент массива средним значением первых \textit{i} элементов массива, необходимо найти это среднее значение.
+			\item\largeПросуммируем первые \textit{i} элементов массива и разделим сумму на \textit{i}, чтобы получить их среднее значение.
+			\item\largeИмея среднее значение первых \textit{i} элементов массива, заменим каждый его член на это значение.
+		\end{enumerate}
+	\end{item}
+	\begin{item}
+		Спецификация функции \textit{ReplacingArrayElements}:
+		\begin{enumerate}
+			\itemЗаголовок: \colorbox{pybg}{\begin{tabular}{l}\textit{def} ReplacingArrayElements(lengthArray: int, array: list, \\ countFirstNumbers: int) -> None:\end{tabular}}
+			\itemНазначение: используется для замены элементов массива на среднее значение его первых \textit{i} элементов.
+		\end{enumerate}
+		Блок-схема:
+		\begin{center}
+			\begin{tikzpicture}[node distance=1.2cm]
+                \node (start) [terminator]
+				{\textit{def} ReplacingArrayElements(lengthArray: int, array: list, countFirstNumbers: int)};
+
+                \node (init_firstNumsSum)[process, below of=start, minimum width=11cm]
+                {firstNumsSum := 0};
+
+				\node (for_1)[cycle, below of=init_firstNumsSum, minimum width=11cm]
+				{$ind1 := 0 \dots countFirstNumbers$};
+
+				\node (sum_nums)[process, below of=for_1, minimum width=11cm]
+                {firstNumsSum := firstNumsSum + array(ind1)};
+
+                \node (init_firstNumsAverage)[process, below of=sum_nums, minimum width=11cm, yshift=-1cm]
+                {firstNumsAverage := firstNumsSum / countFirstNumbers};
+
+                \node (for_2)[cycle, below of=init_firstNumsAverage, minimum width=11cm]
+				{$ind2 := 0 \dots lengthArray$};
+
+				\node (change)[process, below of=for_2, minimum width=11cm]
+                {array(ind2) := firstNumsAverage};
+
+                \node (stop) [terminator, below of=change, minimum width=15.25cm, yshift=-1cm]
+				{Конец};
+
+				\node at($(for_1) - (-6.3, -0.6)$){\begin{tabular}{l}Конец \\ цикла\end{tabular}};
+				\node at($(for_2) - (-6.3, -0.6)$){\begin{tabular}{l}Конец \\ цикла\end{tabular}};
+
+                \path [connector] (start) -- (init_firstNumsSum);
+                \path [connector] (init_firstNumsSum) -- (for_1);
+                \path [connector] (for_1) -- (sum_nums);
+                \path [connector] (sum_nums.south) -- ++(0, -0.5) -- ++(-7, 0) |- (for_1.west);
+                \path [connector] (for_1.east) -- ++(1.5, 0) -- ++(0, -2.4) -| (init_firstNumsAverage.north);
+                \path [connector] (init_firstNumsAverage) -- (for_2);
+                \path [connector] (for_2) -- (change);
+                \path [connector] (change.south) -- ++(0, -0.5) -- ++(-7, 0) |- (for_2.west);
+                \path [connector] (for_2.east) -- ++(1.5, 0) -- ++(0, -2.4) -| (stop.north);
+			\end{tikzpicture}
+		\end{center}
+	\end{item}
+	\newpage
+	\begin{item}
+		Код \textit{алгоритма} на языке \textit{Python}:
+		\begin{mycode}
+def ReplacingArrayElements(lengthArray: int, array: list,
+                           countFirstNumbers: int) -> None:
+    if (countFirstNumbers > lengthArray) | (countFirstNumbers == 0):
+        return
+
+    firstNumsSum: int = 0
+    for ind in range(0, countFirstNumbers):
+        firstNumsSum += array[ind]
+
+    firstNumsAverage: float = firstNumsSum / countFirstNumbers
+
+    for ind in range(0, lengthArray):
+        array[ind] = firstNumsAverage
+		\end{mycode}
+	\end{item}
+	\begin{item}
+		\hfill \textit{Таблица 4}
+
+		\centering\textbf{Тестовые данные}
+
+		\begin{table}[h]
+			\begin{center}
+				\begin{large}
+					\begin{tabularx}{\textwidth}{>{\vspace{1pt}}X<{\vspace{4pt}}|>{\vspace{1pt}}X<{\vspace{4pt}}}
+						\hline
+						Входные данные & Выходные данные \\ \hline
+						\makecell[tl]{\begin{tabular}{l}5 \\ 1 2 3 4 5 \\ 6\end{tabular}} & \makecell[l]{1 2 3 4 5} \\ \hline
+						\makecell[l]{\begin{tabular}{l}5 \\ 1 2 3 4 5 \\ 3\end{tabular}} & \makecell[l]{2 2 2 2 2} \\ \hline
+						\makecell[l]{\begin{tabular}{l}5 \\ 1 2 3 4 5 \\ 0\end{tabular}} & \makecell[l]{1 2 3 4 5} \\ \hline
+					\end{tabularx}
+				\end{large}
+			\end{center}
+		\end{table}
+	\end{item}
+\end{enumerate}
