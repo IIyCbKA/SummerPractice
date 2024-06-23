@@ -23,22 +23,22 @@
 		Блок-схема:
 		\begin{center}
 			\begin{tikzpicture}[node distance=1.2cm]
-				\node (start) [terminator]
+				\node (start) [terminator, minimum width=15.6cm]
 				{\textit{def} TimeRounding(hours: int, minutes: int, seconds: int)};
 
-				\node (compute_only_hours) [process, below of=start, yshift=-0.5cm]
+				\node (compute_only_hours) [process, below of=start, yshift=-0.5cm, minimum width=15.6cm]
 				{\begin{tabular}{c}Приведем переменную \textbf{hours} к строковому виду с округлением по минутам \\ из переменной \textbf{minutes}, с сохранением результата в переменную \textbf{only\_hours}\end{tabular}};
 
-				\node (compute_hours_with_minutes) [process, below of=compute_only_hours, yshift=-1cm]
+				\node (compute_hours_with_minutes) [process, below of=compute_only_hours, yshift=-1cm, minimum width=15.6cm]
 				{\begin{tabular}{c}Приведем переменные \textbf{hours} и \textbf{minutes} к строковому \\ виду с округлением по секундам из переменной \textbf{seconds}, \\ с сохранением результата в переменную \textbf{hours\_with\_minutes}\end{tabular}};
 
-				\node (compute_result) [process, below of=compute_hours_with_minutes, yshift=-1.2cm]
+				\node (compute_result) [process, below of=compute_hours_with_minutes, yshift=-1cm, minimum width=15.6cm]
 				{\begin{tabular}{c}Объединим переменные \textbf{only\_hours} и \textbf{hours\_with\_minutes} \\ и запишем результат в переменную \textbf{result}\end{tabular}};
 
-				\node (return) [data, below of=compute_result, yshift=-0.4cm]
+				\node (return) [data, below of=compute_result, yshift=-0.5cm, minimum width=7cm]
 				{Возврат result};
 
-				\node (stop) [terminator, below of=return]
+				\node (stop) [terminator, below of=return, yshift=-0.15cm, minimum width=15.6cm]
 				{Конец};
 
 				\path [connector] (start) -- (compute_only_hours);

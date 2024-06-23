@@ -33,13 +33,13 @@
                 \node (while_true1)[process, below right = 0.5cm of while]
                 {area := area * (1 + growth / 100) - plan};
 
-                \node (while_true2)[process, below of=while_true1]
+                \node (while_true2)[process, below of=while_true1, minimum width=7.71cm]
                 {countAge := countAge + 1};
 
                 \node (return) [data, below of=while, yshift=-3cm]
 				{Возврат countAge};
 
-				\node (stop) [terminator, below of=return]
+				\node (stop) [terminator, below of=return, minimum width=11.5cm]
 				{Конец};
 
 				\node at($(while) - (3, -0.4)$){\bf--};
