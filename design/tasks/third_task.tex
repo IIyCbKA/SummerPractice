@@ -1,0 +1,91 @@
+\section{Тема 3. Циклические и итерационные алгоритмы. Задание 23.}
+\label{sec:task3}
+
+\begin{enumerate}
+	\item\largeЛеспромхоз ведёт заготовку деловой древесины. Первоначальный объём её на территории леспромхоза составлял \textit{p} кубометров. Ежегодный прирост составляет \textit{k}\%. Годовой план заготовки — \textit{t} кубометров. Через сколько лет в бывшем лесу будут расти одни опята?
+	\begin{item}
+		Словесное описание \textit{алгоритма}:
+
+		\begin{enumerate}
+			\item\largeИзвестно, что ежемесячно объем древесины \textit{p} кубометров увеличивается на \textit{k}\%, при этом уменьшался на \textit{t} кубометров ежегодно.
+			\item\largeИсходя из условия, самый простой способ узнать срок жизни леса - простой перебор, который будет считать, сколько древесины остается спустя каждый год.
+			\item\largeОрганизуем цикл, который будет отслеживать количество древесины спустя каждый год. Если количество ее кубометров будет = 0, значит срок жизни леса подошел к концу.
+		\end{enumerate}
+	\end{item}
+	\begin{item}
+		Спецификация функции \textit{CalculateAgeDeathForest}:
+		\begin{enumerate}
+			\itemЗаголовок: \colorbox{pybg}{\textit{def} CalculateAgeDeathForest(area: int, growth: int, plan: int) -> int}
+			\itemНазначение: используется для нахождения срока жизни леса в годах.
+		\end{enumerate}
+		Блок-схема:
+		\begin{center}
+			\begin{tikzpicture}[node distance=1.2cm]
+                \node (start) [terminator]
+				{\textit{def} CalculateAgeDeathForest(area: int, growth: int, plan: int)};
+
+				\node (init_countAge)[process, below of=start]
+                {countAge := 0};
+
+                \node (while)[decision, below of=init_countAge, yshift=-0.8cm]
+                {area > 0};
+
+                \node (while_true1)[process, below right = 0.5cm of while]
+                {area := area * (1 + growth / 100) - plan};
+
+                \node (while_true2)[process, below of=while_true1]
+                {countAge := countAge + 1};
+
+                \node (return) [data, below of=while, yshift=-3cm]
+				{Возврат countAge};
+
+				\node (stop) [terminator, below of=return]
+				{Конец};
+
+				\node at($(while) - (3, -0.4)$){\bf--};
+				\node at($(while) - (-3, -0.4)$){\bf+};
+
+                \path [connector] (start) -- (init_countAge);
+                \path [connector] (init_countAge) -- (while);
+                \path [connector] (while.east) -| (while_true1.north);
+                \path [connector] (while_true1) -- (while_true2);
+                \path [connector] (while.west) -- ++(-3.4, 0) -- ++(0, -3.4) -| (return.north);
+                \path [connector] (while_true2) -- ++(0, -0.83) -| (return.north);
+                \path [connector] (return) -- (stop);
+			\end{tikzpicture}
+		\end{center}
+	\end{item}
+	\newpage
+	\begin{item}
+		Код \textit{алгоритма} на языке \textit{Python}:
+		\begin{mycode}
+def CalculateAgeDeathForest(area: int, growth: int, plan: int) -> int:
+    countAge: int = 0
+    while area > 0:
+        area = area * (1 + growth / 100) - plan
+        countAge += 1
+
+    return countAge
+		\end{mycode}
+	\end{item}
+	\begin{item}
+		\hfill \textit{Таблица 1}
+
+		\centering\textbf{Тестовые данные}
+
+		\begin{table}[h]
+			\begin{center}
+				\begin{large}
+					\begin{tabularx}{\textwidth}{>{\vspace{1pt}}X<{\vspace{4pt}}|>{\vspace{1pt}}X<{\vspace{4pt}}}
+						\hline
+						Входные данные & Выходные данные \\ \hline
+						\makecell[l]{\begin{tabular}{c}10 \\ 9 \\ 4\end{tabular}} & \makecell[l]{3} \\ \hline
+						\makecell[l]{\begin{tabular}{c}10 \\ 10 \\ 4\end{tabular}} & \makecell[l]{4} \\ \hline
+						\makecell[l]{\begin{tabular}{c}1 \\ 100 \\ 2\end{tabular}} & \makecell[l]{1} \\ \hline
+						\makecell[l]{\begin{tabular}{c}0 \\ 1000 \\ 1\end{tabular}} & \makecell[l]{0} \\ \hline
+					\end{tabularx}
+				\end{large}
+			\end{center}
+		\end{table}
+	\end{item}
+\end{enumerate}
