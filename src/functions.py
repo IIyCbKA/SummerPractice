@@ -22,9 +22,9 @@ def ReturnAgeText(age: int) -> str:
         correctForm: str = 'год'
     else:
         correctForm: str = 'года'
-    answer: str = f'Мне {age} {correctForm}'
+    result: str = f'Мне {age} {correctForm}'
 
-    return answer
+    return result
 
 
 # нет уточнения того, что сначала делать - отнимать план или увеличивать площадь
