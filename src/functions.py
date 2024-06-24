@@ -56,20 +56,18 @@ def ReplacingArrayElements(lengthArray: int, array: list,
 
 # Гнилое задание, сильный упор в мат, хотя информации в интернете очень мало.
 # Хорошо, что есть numpy...
-def ComposePolynoms(coefsP: list, coefsQ: list) -> list:
-    lengthArrayCoefsP: int = len(coefsP)
-    lengthArrayCoefsQ: int = len(coefsQ)
-
-    if lengthArrayCoefsP == 0:
-        return []
-    elif lengthArrayCoefsQ == 0:
-        return [coefsP[-1]]
+def ComposePolynoms(coefsP: list | None, coefsQ: list | None) -> list | None:
+    if coefsP is None:
+        result: None = None
+    elif coefsQ is None:
+        result: list = [coefsP[-1]]
     else:
         PolynomP = np.poly1d(coefsP)
         PolynomQ = np.poly1d(coefsQ)
         composedPolynom = PolynomP(PolynomQ)
+        result: list = composedPolynom.coefficients.tolist()
 
-        return composedPolynom.coefficients.tolist()
+    return result
 
 
 # более-менее норм задачка, в которой просто нужно в алгом

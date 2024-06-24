@@ -76,12 +76,12 @@ def test_ComposePolynoms():
     thirdPolyQ: list = [2, 0, 11]
     assert ComposePolynoms(thirdPolyP, thirdPolyQ) == [1]
 
-    fourthPolyP: list = []
+    fourthPolyP: None = None
     fourthPolyQ: list = [2, 0, 11]
-    assert ComposePolynoms(fourthPolyP, fourthPolyQ) == []
+    assert ComposePolynoms(fourthPolyP, fourthPolyQ) is None
 
     fifthPolyP: list = [2, 0, 11]
-    fifthPolyQ: list = []
+    fifthPolyQ: None = None
     assert ComposePolynoms(fifthPolyP, fifthPolyQ) == [11]
 
 
