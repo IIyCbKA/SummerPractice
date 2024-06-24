@@ -71,15 +71,15 @@ def ComposePolynoms(coefsP: list | None, coefsQ: list | None) -> list | None:
 
 
 # более-менее норм задачка, в которой просто нужно в алгом
-def SearchLargestArithOrGeomProgression(array: list) -> int:
-    arrayLength: int = len(array)
-
-    if arrayLength <= 2:
-        return arrayLength
-
-    largestArith: int = SearchLargestProgression(array, arrayLength, True)
-    largestGeom: int = SearchLargestProgression(array, arrayLength, False)
-    largestProgression: int = max(largestArith, largestGeom)
+def SearchLargestArithOrGeomProgression(lengthArray: int, array: list) -> int:
+    if lengthArray <= 2:
+        largestProgression: int = lengthArray
+    else:
+        largestArith: int = SearchLargestProgression(
+            array, lengthArray, True)
+        largestGeom: int = SearchLargestProgression(
+            array, lengthArray, False)
+        largestProgression: int = max(largestArith, largestGeom)
 
     return largestProgression
 

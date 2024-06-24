@@ -86,26 +86,40 @@ def test_ComposePolynoms():
 
 
 def test_SearchLargestArithOrGeomProgression():
+    lengthFirstArray: int = 5
     firstArray: list = [1, 3, 5, 7, 9]
-    assert SearchLargestArithOrGeomProgression(firstArray) == 5
+    assert SearchLargestArithOrGeomProgression(lengthFirstArray,
+                                               firstArray) == 5
 
+    lengthSecondArray: int = 5
     secondArray: list = [2, 1, 3, 5, 9]
-    assert SearchLargestArithOrGeomProgression(secondArray) == 3
+    assert SearchLargestArithOrGeomProgression(lengthSecondArray,
+                                               secondArray) == 3
 
+    lengthThirdArray: int = 7
     thirdArray: list = [2, 4, 1, 3, 9, 27, 7]
-    assert SearchLargestArithOrGeomProgression(thirdArray) == 4
+    assert SearchLargestArithOrGeomProgression(lengthThirdArray,
+                                               thirdArray) == 4
 
+    lengthFourthArray: int = 4
     fourthArray: list = [3, 4, 11, 2]
-    assert SearchLargestArithOrGeomProgression(fourthArray) == 2
+    assert SearchLargestArithOrGeomProgression(lengthFourthArray,
+                                               fourthArray) == 2
 
+    lengthFifthArray: int = 5
     fifthArray: list = [1, 2, 4, 8, 16]
-    assert SearchLargestArithOrGeomProgression(fifthArray) == 5
+    assert SearchLargestArithOrGeomProgression(lengthFifthArray,
+                                               fifthArray) == 5
 
+    lengthSixthArray: int = 2
     sixthArray: list = [1, 12]
-    assert SearchLargestArithOrGeomProgression(sixthArray) == 2
+    assert SearchLargestArithOrGeomProgression(lengthSixthArray,
+                                               sixthArray) == 2
 
+    lengthSeventhArray: int = 6
     seventhArray: list = [8, 9, 10, 12, 14, 16]
-    assert SearchLargestArithOrGeomProgression(seventhArray) == 4
+    assert SearchLargestArithOrGeomProgression(lengthSeventhArray,
+                                               seventhArray) == 4
 
 
 def test_SearchNaturalNumsWithSortedDigits():
