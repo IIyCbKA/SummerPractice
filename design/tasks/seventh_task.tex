@@ -1,0 +1,151 @@
+\section{Тема 7. Разветвляющиеся алгоритмы. Задание 23.}
+\label{sec:task7}
+
+\begin{enumerate}
+	\item\largeНайти все натуральные числа, не превосходящие заданного \textit{n}, десятичная запись которых есть строго возрастающая или строго убывающая последовательность цифр.
+	\begin{item}
+		Словесное описание \textit{алгоритма}:
+
+		\begin{enumerate}
+			\item\largeИдея решения заключается в том, чтобы рекурсивно составлять числа, добавляя к существующему цифры, и проверять их на соответствие условиям задачи.
+			\item\largeДля реализации озвученной выше идеи создадим цикл для старта составления чисел с определенной цифры.
+			\item\largeОпределенную цифру подаем в рекурсивную функцию, которая проверяет, не превышает ли оно заданного и является ли его десятичная запись строго возрастающей или строго убывающей последовательностью цифр.
+			\item\largeСоответственно, если число будет подходить - тогда добавляем его к общей сумме таких чисел и продолжаем его составление дальше, в противном случае - заканчиваем эту рекурсивную ветвь.
+			\item\largeВ конце нужно будет лишь просуммировать количество подходящих чисел от каждой начальной цифры и вернуть результат пользователю.
+		\end{enumerate}
+	\end{item}
+	\begin{item}
+		Спецификация функции \textit{SearchNaturalNumsWithSortedDigits}:
+		\begin{enumerate}
+			\itemЗаголовок: \colorbox{pybg}{\textit{def} SearchNaturalNumsWithSortedDigits(limit: int) -> int}
+			\itemНазначение: используется для нахождения всех натуральных чисел, не превосходящих \textit{n}, десятичная запись которых - строго возрастающая или строго убывающая последовательность цифр.
+		\end{enumerate}
+
+		\newpage
+
+		Блок-схемы:
+		\begin{center}
+			\begin{tikzpicture}[node distance=1.2cm]
+                \node (start) [terminator]
+				{\textit{def} SearchNaturalNumsWithSortedDigits(limit: int)};
+
+				\node (init_countRightNums)[process, below of=start, minimum width=9.76cm]
+				{countRightNums := 0};
+
+				\node (for)[cycle, below of=init_countRightNums]
+				{$startNum := 1 \dots 10$};
+
+				\node (sum_result)[process, below of=for, yshift=-0.6cm]
+				{\begin{tabular}{c}Вызовем \textbf{FindRightNums(str(startNum), limit, None)}, \\ передав \textbf{startNum} как строку, и добавим \\ возвращенный результат к \textbf{countRightNums}\end{tabular}};
+
+                \node (return) [data, below of=for, yshift=-3.4cm]
+				{Возврат countRightNums};
+
+				\node (stop) [terminator, below of=return, minimum width=9.76cm]
+				{Конец};
+
+                \node at($(for) - (-4.5, -0.3)$){Конец цикла};
+
+				\path [connector] (start) -- (init_countRightNums);
+				\path [connector] (init_countRightNums) -- (for);
+				\path [connector] (for) -- (sum_result);
+				\path [connector] (sum_result.south) -- ++ (0, -0.6) -- ++ (-6.5, 0) |- (for.west);
+				\path [connector] (for.east) -- ++ (4.2, 0) -- ++ (0, -3.7) -| (return.north);
+				\path [connector] (return) -- (stop);
+			\end{tikzpicture}
+
+            \newpage
+
+			\begin{tikzpicture}[node distance=1.2cm]
+			\node (start) [terminator]
+			{\textit{def} FindRightNums(num: str, limit: int, isIncreasing: bool | None)};
+
+			\node (anyCheck)[process, below of=start, yshift=-0.7cm, minimum width=12.32cm]
+			{\begin{tabular}{c}Проверяем число \textbf{num} на соответствие условиям, если хотя \\ бы одно из условий не проходит, значит True, иначе - False. \\ Результат записываем в переменную \textbf{anyCheck}\end{tabular}};
+
+			\node (if)[decision, below of=anyCheck, yshift=-1.7cm]
+            {anyCheck};
+
+            \node (if_true)[process, below right = 1.5cm of if]
+			{count := 0};
+
+			\node (if_false1)[process, below left = 1.5cm of if]
+			{count := 1};
+
+			\node (if_false2)[process, below of=if_false1, yshift=-2cm]
+			{\begin{tabular}{c}Если еще не известно, \textbf{isIncreasing} идет \\ на убывание или на возрастание, тогда \\ вызываем рекурсии на сборку и на \\ убывание, и на возрастание, иначе - на \\ то, что известно. Результаты вызовов \\ добавляем к переменной \textbf{count}\end{tabular}};
+
+            \node (return) [data, below of=if, yshift=-8.5cm, minimum width=12.32cm]
+			{Возврат count};
+
+			\node at($(if) - (-2.1, -0.3)$){True};
+			\node at($(if) - (2, -0.3)$){False};
+
+            \path [connector] (start) -- (anyCheck);
+            \path [connector] (anyCheck) -- (if);
+            \path [connector] (if) -| (if_true);
+            \path [connector] (if) -| (if_false1);
+            \path [connector] (if_false1) -- (if_false2);
+            \path [connector] (if_false2.south) -- ++ (0, -0.8) -| (return.north);
+            \path [connector] (if_true.south) -- ++ (0, -5.57) -| (return.north);
+			\end{tikzpicture}
+		\end{center}
+	\end{item}
+	\newpage
+	\begin{item}
+		Код \textit{алгоритма} на языке \textit{Python}:
+		\begin{mycode}
+def SearchNaturalNumsWithSortedDigits(limit: int) -> int:
+    countRightNums: int = 0
+    for startNum in range(1, 10):
+        countRightNums += FindRightNums(str(startNum), limit, None)
+
+    return countRightNums
+
+
+def FindRightNums(num: str, limit: int, isIncreasing: bool | None) -> int:
+    numGreaterLimit: bool = (int(num) > limit)
+    numIsStrictlyIncreasing: bool = (
+        len(num) > 1 and int(num[-1]) <= int(num[-2])) if isIncreasing \
+        else len(num) > 1 and int(num[-1]) >= int(num[-2])
+    numIsBig: bool = len(num) > 10
+    anyCheck: bool = numGreaterLimit or numIsStrictlyIncreasing or numIsBig
+
+    if anyCheck:
+        count: int = 0
+
+    else:
+        count: int = 1
+        if isIncreasing or isIncreasing is None:
+            for nextDigit in range(int(num[-1]), 10):
+                count += FindRightNums(num + str(nextDigit), limit, True)
+        if not isIncreasing or isIncreasing is None:
+            for nextDigit in range(0, int(num[-1])):
+                count += FindRightNums(num + str(nextDigit), limit, False)
+
+    return count
+		\end{mycode}
+	\end{item}
+	\newpage
+	\begin{item}
+		\hfill \textit{Таблица 7}
+
+		\centering\textbf{Тестовые данные}
+
+		\begin{table}[h]
+			\begin{center}
+				\begin{large}
+					\begin{tabularx}{\textwidth}{>{\vspace{1pt}}X<{\vspace{4pt}}|>{\vspace{1pt}}X<{\vspace{4pt}}}
+						\hline
+						Входные данные & Выходные данные \\ \hline
+						\makecell[l]{50} & \makecell[l]{46} \\ \hline
+						\makecell[l]{100} & \makecell[l]{90} \\ \hline
+						\makecell[l]{500} & \makecell[l]{174} \\ \hline
+						\makecell[l]{1000} & \makecell[l]{294} \\ \hline
+						\makecell[l]{10000000} & \makecell[l]{1458} \\ \hline
+					\end{tabularx}
+				\end{large}
+			\end{center}
+		\end{table}
+	\end{item}
+\end{enumerate}
