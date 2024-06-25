@@ -96,18 +96,18 @@ def SearchNaturalNumsWithSortedDigits(limit: int) -> int:
 
 
 # не совсем понятное условие без примеров, решение методом тыка (вроде так)
-def FindMedianXY(arrayDots: list) -> list:
-    lengthArray: int = len(arrayDots)
-    halfLength: int = lengthArray // 2
+def FindMedianXY(countDots: int, arrayDots: list) -> list:
+    halfLength: int = countDots // 2
     arrayResult: list = []
 
-    # вертикальная
-    sortedArraysByIndexAndAddResult(arrayDots, arrayResult, lengthArray,
-                                    halfLength, 0)
+    if countDots > 0:
+        # вертикальная
+        sortedArraysByIndexAndAddResult(arrayDots, arrayResult, countDots,
+                                        halfLength, 0)
 
-    # горизонтальная
-    sortedArraysByIndexAndAddResult(arrayDots, arrayResult, lengthArray,
-                                    halfLength, 1)
+        # горизонтальная
+        sortedArraysByIndexAndAddResult(arrayDots, arrayResult, countDots,
+                                        halfLength, 1)
 
     return arrayResult
 

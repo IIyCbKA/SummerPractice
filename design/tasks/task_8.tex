@@ -1,0 +1,149 @@
+\section{Тема 8. Геометрия и теория множеств. Задание 23.}
+\label{sec:task8}
+
+\begin{enumerate}
+	\item\largeМедианой множества точек на плоскости назовём прямую, которая делит множество на два подмножества одинаковой мощности. Найти горизонтальную и вертикальную медианы заданного множества, у которого никакие две точки не лежат на одной горизонтальной или вертикальной прямой.
+	\begin{item}
+		Словесное описание \textit{алгоритма}:
+
+		\begin{enumerate}
+			\item\largeДля решения задачи необходимо найти горизонтальную и вертикальную медианы, соответствующие условию. Для этого отсортируем точки сначала по x, затем - по y, взяв медианы из отсортированных точек.
+			\item\largeПолученные медианы будут являться координатами проекции всех точек для построения медиан по условию.
+		\end{enumerate}
+	\end{item}
+	\begin{item}
+		Спецификация функции \textit{FindMedianXY}:
+		\begin{enumerate}
+			\itemЗаголовок: \colorbox{pybg}{\textit{def} FindMedianXY(countDots: int, arrayDots: list) -> list}
+			\itemНазначение: используется для нахождения координат проекции всех точек прямой, являющихся медианами, которые делят вертикально и горизонтально множество точек на два равных по мощности подмножества.
+		\end{enumerate}
+
+		\newpage
+
+		Блок-схемы:
+		\begin{center}
+			\begin{tikzpicture}[node distance=1.2cm]
+                \node (start) [terminator]
+			    {\textit{def} FindMedianXY(countDots: int, arrayDots: list)};
+
+			    \node (init_halfLength)[process, below of=start, minimum width=9.54cm]
+				{halfLength := countDots div 2};
+
+				\node (init_arrayResult)[process, below of=init_halfLength, minimum width=9.54cm]
+				{Создаем массив \textbf{arrayResult} для проекций};
+
+				\node (if)[decision, below of=init_arrayResult, yshift=-2cm]
+                {\begin{tabular}{c}countDots \\ > \\ 0\end{tabular}};
+
+                \node (if_true1)[process, below right = 1.5cm of if]
+			    {\begin{tabular}{c}Вызовем функцию \\ \textit{sortedArraysByIndexAndAddResult} для \\ нахождения медианы точек по \textit{x}, \\ это и будет координатой \\ проекции всех точек для  \\ вертикальной прямой. Результат \\ запишем в \textbf{arrayResult(0)}\end{tabular}};
+
+                \node (if_true2)[process, below of=if_true1, yshift=-3.8cm]
+			    {\begin{tabular}{c}Вызовем функцию \\ \textit{sortedArraysByIndexAndAddResult} для \\ нахождения медианы точек по \textit{y}, \\ это и будет координатой \\ проекции всех точек для \\ горизонтальной прямой. Результат \\ запишем в \textbf{arrayResult(1)}\end{tabular}};
+
+                \node (return) [data, below of=if, yshift=-12.2cm]
+			    {Возврат arrayResult};
+
+                \node (stop) [terminator, below of=return, minimum width=9.54cm]
+				{Конец};
+
+				\node at($(if) - (-4.4, -0.4)$){\bf+};
+				\node at($(if) - (3.8, -0.4)$){\bf--};
+
+				\path [connector] (start) -- (init_halfLength);
+				\path [connector] (init_halfLength) -- (init_arrayResult);
+				\path [connector] (init_arrayResult) -- (if);
+				\path [connector] (if) -| (if_true1);
+				\path [connector] (if_true1) -- (if_true2);
+				\path [connector] (if.west) -- ++(-3, 0) -- ++(0, -12.4) -| (return.north);
+				\path [connector] (if_true2.south) -- ++(0, -0.575) -| (return.north);
+				\path [connector] (return) -- (stop);
+			\end{tikzpicture}
+
+			\newpage
+            \begin{tikzpicture}[node distance=1.2cm]
+                \node (start) [terminator, minimum width=9.5cm]
+			    {\begin{tabular}{l}\textit{def} sortedArraysByIndexAndAddResult(\\ arrayDots: list, arrayResult: list, \\ lengthArray: int, halfLength: int, keyInd: int)\end{tabular}};
+
+                \node (sort)[process, below of=start, yshift=-1.5cm]
+				{\begin{tabular}{c}Сортируем массив точек по ключу из \textbf{keyInd}. \\ Если $keyInd = 0$, тогда по \textit{х}, \\ а если $keyInd = 1$, тогда по \textit{y}\end{tabular}};
+
+                \node (if)[decision, below of=sort, yshift=-2.6cm]
+                {\begin{tabular}{c}lengthArray \\ mod 2 = 0\end{tabular}};
+
+                \node (if_true)[process, below right = 0.5cm of if]
+			    {\begin{tabular}{c}Получим среднее значение \\ двух чисел, стоящих по \\ середине вариационного \\ ряда, округлим до 2 \\ знаков после запятой \\ и запишем его в \\ переменную \textbf{result}\end{tabular}};
+
+                \node (if_false)[process, below left = 0.5cm of if]
+			    {\begin{tabular}{c}Возьмем число, стоящее \\ посередине вариационного \\ ряда и запишем его \\ в переменную \textbf{result}\end{tabular}};
+
+                \node (append)[process, below of=if, yshift=-7cm, minimum width=9.5cm]
+                {\begin{tabular}{c}Добавим переменную \textbf{result} \\ в массив \textbf{arrayResult}\end{tabular}};
+
+                \node at($(if) - (-3.2, -0.4)$){\bf+};
+				\node at($(if) - (3.2, -0.4)$){\bf--};
+
+                \path [connector] (start) -- (sort);
+                \path [connector] (sort) -- (if);
+                \path [connector] (if) -| (if_true);
+                \path [connector] (if) -| (if_false);
+                \path [connector] (if_false.south) -- ++(0, -2.545) -| (append.north);
+                \path [connector] (if_true.south) -- ++(0, -0.7) -| (append.north);
+            \end{tikzpicture}
+		\end{center}
+	\end{item}
+	\newpage
+	\begin{item}
+		Код \textit{алгоритма} на языке \textit{Python}:
+		\begin{mycode}
+def FindMedianXY(countDots: int, arrayDots: list) -> list:
+    halfLength: int = countDots // 2
+    arrayResult: list = []
+
+    if countDots > 0:
+        # вертикальная
+        sortedArraysByIndexAndAddResult(arrayDots, arrayResult, countDots,
+                                        halfLength, 0)
+
+        # горизонтальная
+        sortedArraysByIndexAndAddResult(arrayDots, arrayResult, countDots,
+                                        halfLength, 1)
+
+    return arrayResult
+
+
+def sortedArraysByIndexAndAddResult(arrayDots: list, arrayResult: list,
+                                    lengthArray: int, halfLength: int,
+                                    keyInd: int) -> None:
+    arrayDots.sort(key=lambda x: x[keyInd])
+    if lengthArray % 2 == 0:
+        result = round((arrayDots[halfLength][keyInd] +
+                        arrayDots[halfLength - 1][keyInd]) / 2, 2)
+    else:
+        result = arrayDots[halfLength][keyInd]
+
+    arrayResult.append(result)
+		\end{mycode}
+	\end{item}
+	\newpage
+	\begin{item}
+		\hfill \textit{Таблица 8}
+
+		\centering\textbf{Тестовые данные}
+
+		\begin{table}[h]
+			\begin{center}
+				\begin{large}
+					\begin{tabularx}{\textwidth}{>{\vspace{1pt}}X<{\vspace{4pt}}|>{\vspace{1pt}}X<{\vspace{4pt}}}
+						\hline
+						Входные данные & Выходные данные \\ \hline
+						\makecell[l]{\begin{tabular}{l}4 \\ 3 4 \\ 1 2 \\ 7 8 \\ 5 6\end{tabular}} & \makecell[l]{4.00 5.00} \\ \hline
+						\makecell[l]{\begin{tabular}{l}5 \\ 4 6 \\ 1 7 \\ 10 20 \\ 11 13 \\ 18 26\end{tabular}} & \makecell[l]{10 13} \\ \hline
+						\makecell[l]{\begin{tabular}{l}1 \\ 10 20\end{tabular}} & \makecell[l]{10 20} \\ \hline
+						\makecell[l]{\begin{tabular}{l}4 \\ 4.5 5.4 \\ 1.1 7.2 \\ 11.3 5.4 \\ 12.3 7.7\end{tabular}} & \makecell[l]{7.90 6.30} \\ \hline
+					\end{tabularx}
+				\end{large}
+			\end{center}
+		\end{table}
+	\end{item}
+\end{enumerate}

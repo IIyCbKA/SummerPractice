@@ -45,12 +45,13 @@ def sortedArraysByIndexAndAddResult(arrayDots: list, arrayResult: list,
                                     lengthArray: int, halfLength: int,
                                     keyInd: int) -> None:
     arrayDots.sort(key=lambda x: x[keyInd])
+    if lengthArray % 2 == 0:
+        result = round((arrayDots[halfLength][keyInd] +
+                        arrayDots[halfLength - 1][keyInd]) / 2, 2)
+    else:
+        result = arrayDots[halfLength][keyInd]
 
-    if (lengthArray % 2 == 0) and (lengthArray >= 2):
-        arrayResult.append(round((arrayDots[halfLength][keyInd] +
-                                  arrayDots[halfLength - 1][keyInd]) / 2, 2))
-    elif (lengthArray % 2 != 0) and (lengthArray >= 1):
-        arrayResult.append(arrayDots[halfLength][keyInd])
+    arrayResult.append(result)
 
 
 def addChainLengthToCompressedArray(chainLength: int,

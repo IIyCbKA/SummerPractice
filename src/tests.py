@@ -141,20 +141,25 @@ def test_SearchNaturalNumsWithSortedDigits():
 
 def test_FindMedianXY():
     # формат координат [x, y]
+    firstCountDots: int = 4
     firstDots: list = [[3, 4], [1, 2], [7, 8], [5, 6]]
-    assert FindMedianXY(firstDots) == [4.00, 5.00]
+    assert FindMedianXY(firstCountDots, firstDots) == [4.00, 5.00]
 
+    secondCountDots: int = 5
     secondDots: list = [[4, 6], [1, 7], [10, 20], [11, 13], [18, 26]]
-    assert FindMedianXY(secondDots) == [10.00, 13.00]
+    assert FindMedianXY(secondCountDots, secondDots) == [10, 13]
 
+    thirdCountDots: int = 1
     thirdDots: list = [[10, 20]]
-    assert FindMedianXY(thirdDots) == [10.00, 20.00]
+    assert FindMedianXY(thirdCountDots, thirdDots) == [10, 20]
 
+    fourthCountDots: int = 4
     fourthDots: list = [[4.5, 5.4], [1.1, 7.2], [11.3, 5.4], [12.3, 7.7]]
-    assert FindMedianXY(fourthDots) == [7.90, 6.30]
+    assert FindMedianXY(fourthCountDots, fourthDots) == [7.90, 6.30]
 
+    fifthCountDots: int = 0
     fifthDots: list = []
-    assert FindMedianXY(fifthDots) == []
+    assert FindMedianXY(fifthCountDots, fifthDots) == []
 
 
 def test_BinaryArrayCompression():
