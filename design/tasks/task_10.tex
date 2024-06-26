@@ -1,0 +1,87 @@
+\section{Тема 10. Алгоритмы обработки символьной информации. Задание 23.}
+\label{sec:task10}
+
+\begin{enumerate}
+	\item\largeПо правилам пунктуации пробел может стоять после, а не перед каждым из следующих знаков: . , ; : ! ? ) ] \} …; перед, а не после знаков: ( [ \{. Заданный текст проверить на соблюдение этих правил и при необходимости исправить. Вместо пробела может быть перевод строки или знак табуляции.
+	\begin{item}
+		Словесное описание \textit{алгоритма}:
+
+		\begin{enumerate}
+			\item\largeУбираем лишние пробелы после знаков препинания: . , ; : ! ? ) ] \} …;
+			\item\largeДобавляем недостающие пробелы после знаков препинания: . , ; : ! ? ) ] \} …;
+			\item\largeУбираем пробелы после открывающих скобок: ( [ \{.
+			\item\largeУбираем лишние пробелы перед открывающими скобками: ( [ \{.
+		\end{enumerate}
+	\end{item}
+	\begin{item}
+		Спецификация функции \textit{CorrectionText}:
+		\begin{enumerate}
+			\itemЗаголовок: \colorbox{pybg}{\textit{def} CorrectionText(text: str) -> str}
+			\itemНазначение: используется для корректировки пробелов перед знаками препинания и после них, согласно правилам пунктуации.
+		\end{enumerate}
+
+		Блок-схема:
+		\begin{center}
+			\begin{tikzpicture}[node distance=1.2cm]
+                \node (start) [terminator, minimum width=11.68cm]
+			    {\textit{def} CorrectionText(text: str)};
+
+                \node (main)[process, below of=start, yshift=-0.75cm]
+				{\begin{tabular}{c}Воспользуемся функцией \textit{sub()} из модуля \textbf{re} и \\ скорректируем знаки препинания с помощью регулярных \\ выражений. Результат запишем в переменную \textbf{text}\end{tabular}};
+
+                \node (return) [data, below of=main, yshift=-1.5cm, minimum width=11.68cm]
+			    {Возврат text};
+
+                \node (stop) [terminator, below of=return, yshift=-0.8cm, minimum width=11.68cm]
+				{Конец};
+
+				\path [connector] (start) -- (main);
+				\path [connector] (main) -- (return);
+				\path [connector] (return) -- (stop);
+			\end{tikzpicture}
+		\end{center}
+	\end{item}
+	\newpage
+	\begin{item}
+		Код \textit{алгоритма} на языке \textit{Python}:
+		\begin{mycode}
+def CorrectionText(text: str) -> str:
+    # Убираем лишние пробелы после знаков препинания .,;:!?)]}
+    text = re.sub(r'\s+([.,;:!?)}\]])', r'\1', text)
+
+    # Добавляем недостающие пробелы после знаков препинания .,;:!?)]}
+    text = re.sub(r'([.,;:!?)}\]])([^\s.,;:!?)}\]])', r'\1 \2', text)
+
+    # Убираем пробелы после открывающих скобок
+    text = re.sub(r'(\(\s+)', '(', text)
+    text = re.sub(r'(\[\s+)', '[', text)
+    text = re.sub(r'(\{\s+)', '{', text)
+
+    # Убираем лишние пробелы перед открывающими скобками
+    text = re.sub(r'\s+([\(\[\{])', r' \1', text)
+
+    return text
+		\end{mycode}
+	\end{item}
+	\begin{item}
+		\hfill \textit{Таблица 10}
+
+		\centering\textbf{Тестовые данные}
+
+		\begin{table}[h]
+			\begin{center}
+				\begin{large}
+					\begin{tabularx}{\textwidth}{>{\vspace{1pt}}X<{\vspace{4pt}}|>{\vspace{1pt}}X<{\vspace{4pt}}}
+						\hline
+						Входные данные & Выходные данные \\ \hline
+						\makecell[l]{( Привет, Андрей ) , - говорил он} & \makecell[l]{(Привет, Андрей), - говорил он} \\ \hline
+						\makecell[l]{(Да $\setminus$n? Ты в этом уверен ? )} & \makecell[l]{(Да? Ты в этом уверен?)} \\ \hline
+						\makecell[l]{( ( Проверю на скобках ) )} & \makecell[l]{((Проверю на скобках))} \\ \hline
+						\makecell[l]{Да , забавно (получается)} & \makecell[l]{Да, забавно (получается)} \\ \hline
+						\makecell[l]{( Чек ) , посмотрим} & \makecell[l]{(Чек), посмотрим} \\ \hline
+					\end{tabularx}
+				\end{large}
+			\end{center}
+		\end{table}
+	\end{item}
+\end{enumerate}

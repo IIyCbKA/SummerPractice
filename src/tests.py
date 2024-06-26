@@ -192,6 +192,12 @@ def test_CorrectionText():
     fourthText: str = ''
     assert CorrectionText(fourthText) == ''
 
+    fifthText: str = 'Да , забавно   (получается)'
+    assert CorrectionText(fifthText) == 'Да, забавно (получается)'
+
+    sixthText: str = '(       Чек        ) , посмотрим'
+    assert CorrectionText(sixthText) == '(Чек), посмотрим'
+
 
 def allTests():
     test_TimeRounding()
