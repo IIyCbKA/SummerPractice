@@ -1,0 +1,180 @@
+\section{Тема 9. Линейная алгебра и сжатие информации. Задание 23.}
+\label{sec:task9}
+
+\begin{enumerate}
+	\item\largeЗаданный неупакованный двоичный массив сжать, используя полубайтовое представление длин цепочек.
+	\begin{item}
+		Словесное описание \textit{алгоритма}:
+
+		\begin{enumerate}
+			\item\largeЗадача довольно непростая, так как подобные способы сжатия практически не используются. Разработаем для этого свой алгоритм.
+			\item\largeБудем отталкиваться, что полбайта - это 4 бит. Максимальное число - 15.
+			\item\largeСчитаем, что массив начинается с 1, то есть нет незначащих нулей.
+			\item\largeБудем хранить в сжатом виде лишь количество подряд идущих бит, то есть цепочки.
+			\item\largeПридерживаться будем следующих правил:
+			    \begin{enumerate}[label=\arabic*.]
+			    \item\largeЕсли длина цепочки меньше 15, тогда записываем фактическую длину цепочки.
+			    \item\largeЕсли длина цепочки равна 15, тогда запишем в сжатый массив два числа - 15 и 0. 0 будет признаком того, что длина цепочки кратна 15. Дальше может идти лишь противоположный бит исходного массива.
+			    \item\largeЕсли длина цепочки больше 15, тогда делаем переносы, записывая длину числами, не превышающими 15, до полного разложения исходной длины. Если после какого-то числа 15 идет не 0, значит это число также относится к цепочке. На примере: имеем 31 подряд идущий бит 0 в исходном массиве, а затем 3 подряд идущие 1. Запишем это так: [15, 15, 1, 3]. А если в исходном массиве будет 30 подряд идущих бит 0, а затем 3 подряд идущие 1, тогда запишем это так: [15, 15, 0, 3].
+			    \end{enumerate}
+		\end{enumerate}
+	\end{item}
+	\begin{item}
+		Спецификация функции \textit{BinaryArrayCompression}:
+		\begin{enumerate}
+			\itemЗаголовок: \colorbox{pybg}{\textit{def} BinaryArrayCompression(array: list) -> list}
+			\itemНазначение: используется для сжатия исходного неупакованного двоичного массива, применяя способ полубайтового представления длин цепочек.
+		\end{enumerate}
+
+		\newpage
+
+		Блок-схемы:
+		\begin{center}
+			\begin{tikzpicture}[node distance=1.2cm]
+                \node (start) [terminator, minimum width=8.772cm]
+			    {\textit{def} BinaryArrayCompression(array: list)};
+
+                \node (init_currentBit)[process, below of=start, minimum width=8.772cm]
+				{currentBit := NULL};
+
+				\node (init_currentBitCount)[process, below of=init_currentBit, minimum width=8.772cm]
+				{currentBitCount := 0};
+
+				\node (init_compressionArray)[process, below of=init_currentBitCount]
+				{Создаем сжатый массив \textbf{compressionArray}};
+
+				\node (for)[cycle, below of=init_compressionArray]
+				{$bit := array(0) \dots array(n)$};
+
+                \node (bit_action)[process, below of=for, yshift=-3.7cm]
+				{\begin{tabular}{c}Если $currentBit = NULL$, тогда \\ запишем в нее \textit{bit} и добавим к \\ \textbf{currentBitCount} единицу. Если \\ $currentBit = bit$, тогда добавим \\ к \textbf{currentBitCount} единицу. Если \\ $currentBit \neq bit$, тогда вызовем \\ \textit{addChainLengthToCompressedArray}, \\ которая запишет длину \\ цепочки в сжатый массив, \\ сбросит \textbf{currentBitCount} до 1 \\ и запишет \textit{bit} в \textbf{currentBit}\end{tabular}};
+
+                \node (last_signal)[process, below of=bit_action, yshift=-5.4cm, minimum width=8.772cm]
+				{\begin{tabular}{c}Вызываем после цикла еще раз \\ \textit{addChainLengthToCompressedArray}, \\ чтобы занести в сжатый массив \\ длину последней цепочки, \\ которая не сбросилась\end{tabular}};
+
+                \node (return) [data, below of=last_signal, yshift=-1.3cm, minimum width=8.772cm]
+			    {Возврат compressionArray};
+
+                \node (stop) [terminator, below of=return, minimum width=8.772cm]
+				{Конец};
+
+				\node at($(for) - (-4.2, -0.3)$){Конец цикла};
+
+				\path [connector] (start) -- (init_currentBit);
+				\path [connector] (init_currentBit) -- (init_currentBitCount);
+				\path [connector] (init_currentBitCount) -- (init_compressionArray);
+				\path [connector] (init_compressionArray) -- (for);
+				\path [connector] (for) -- (bit_action);
+				\path [connector] (bit_action.south) -- ++(0, -0.5) -- ++(-4.25, 0) |- (for.west);
+				\path [connector] (for.east) -- ++(1.25, 0) -- ++(0, -9.2) -| (last_signal.north);
+				\path [connector] (last_signal) -- (return);
+				\path [connector] (return) -- (stop);
+			\end{tikzpicture}
+
+			\newpage
+
+			\begin{tikzpicture}[node distance=1.2cm]
+			    \node (start) [terminator]
+			    {\begin{tabular}{l}\textit{def} addChainLengthToCompressedArray( \\ chainLength: int, compressedArray: list)\end{tabular}};
+
+                \node (if1)[decision, below of=start, yshift=-2.2cm]
+                {\begin{tabular}{c}chainLength \\ < 15\end{tabular}};
+
+                \node (if1_true)[process, below right = 0.5cm of if1]
+			    {\begin{tabular}{c}Запишем длину \\ цепочки в массив \\ \textbf{compressedArray}\end{tabular}};
+
+                \node (if2)[decision, below left = 0.5cm of if1, xshift=-0.7cm]
+                {\begin{tabular}{c}chainLength \\ = 15\end{tabular}};
+
+                \node (if2_true)[process, below right = 0.4cm of if2]
+			    {\begin{tabular}{c}Запишем в массив \\ \textbf{compressedArray} \\ 15 и 0\end{tabular}};
+
+			    \node (if2_false)[process, below left = 0.4cm of if2]
+			    {\begin{tabular}{c}Записываем в массив \\ \textbf{compressedArray} \\ длину цепочки \\ числами, не \\ превышающими 15, \\ раскладывая длину\end{tabular}};
+
+                \node (stop) [terminator, below of=if1, yshift=-9cm, minimum width=8.3cm]
+				{Конец};
+
+				\node at($(if1) - (-2.9, -0.4)$){\bf+};
+				\node at($(if1) - (2.7, -0.4)$){\bf--};
+
+				\node at($(if2) - (-2.7, -0.4)$){\bf+};
+				\node at($(if2) - (2.9, -0.4)$){\bf--};
+
+                \path [connector] (start) -- (if1);
+                \path [connector] (if1) -| (if1_true);
+                \path [connector] (if1) -| (if2);
+                \path [connector] (if2) -| (if2_true);
+                \path [connector] (if2) -| (if2_false);
+                \path [connector] (if1_true.south) -- ++(0, -5.85) -| (stop.north);
+                \path [connector] (if2_true.south) -- ++(0, -2.8) -- ++(-3.58, 0) -- ++ (0, -0.552) -| (stop.north);
+                \path [connector] (if2_false.south) -- ++(0, -0.955) -- ++(3.725, 0) -- ++ (0, -0.552) -| (stop.north);
+			\end{tikzpicture}
+		\end{center}
+	\end{item}
+	\newpage
+	\begin{item}
+		Код \textit{алгоритма} на языке \textit{Python}:
+		\begin{mycode}
+def BinaryArrayCompression(array: list) -> list:
+    currentBit: int | None = None
+    currentBitCount: int = 0
+    compressionArray: list = []
+
+    for bit in array:
+        if currentBit is None:
+            currentBit = bit
+            currentBitCount += 1
+        elif bit == currentBit:
+            currentBitCount += 1
+        else:
+            addChainLengthToCompressedArray(currentBitCount, compressionArray)
+            currentBitCount = 1
+            currentBit = bit
+
+    if currentBitCount > 0:
+        addChainLengthToCompressedArray(currentBitCount, compressionArray)
+
+    return compressionArray
+
+
+def addChainLengthToCompressedArray(chainLength: int,
+                                    compressedArray: list) -> None:
+    if chainLength < 15:
+        compressedArray.append(chainLength)
+    elif chainLength == 15:
+        compressedArray.append(chainLength)
+        compressedArray.append(0)
+    else:
+        while chainLength > 0:
+            if chainLength >= 15:
+                numAdd = 15
+            else:
+                numAdd = chainLength
+
+            chainLength -= numAdd
+            compressedArray.append(numAdd)
+		\end{mycode}
+	\end{item}
+	\newpage
+	\begin{item}
+		\hfill \textit{Таблица 9}
+
+		\centering\textbf{Тестовые данные}
+
+		\begin{table}[h]
+			\begin{center}
+				\begin{large}
+					\begin{tabularx}{\textwidth}{>{\vspace{1pt}}X<{\vspace{4pt}}|>{\vspace{1pt}}X<{\vspace{4pt}}}
+						\hline
+						Входные данные & Выходные данные \\ \hline
+						\makecell[l]{1 1 1 0 0 1} & \makecell[l]{3 2 1} \\ \hline
+						\makecell[l]{1 0 1 0 1 0} & \makecell[l]{1 1 1 1 1 1} \\ \hline
+						\makecell[l]{1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0} & \makecell[l]{15 0 2} \\ \hline
+						\makecell[l]{1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1} & \makecell[l]{15 2 1 1} \\ \hline
+					\end{tabularx}
+				\end{large}
+			\end{center}
+		\end{table}
+	\end{item}
+\end{enumerate}
