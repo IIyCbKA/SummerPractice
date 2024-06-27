@@ -1,6 +1,5 @@
 \documentclass{report}
 
-% Подключаем необходимые библиотеки. %
 \usepackage[russian]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
@@ -29,7 +28,6 @@
 \usetikzlibrary{calc}
 \usetikzlibrary{chains}
 
-% Предопределяем типы блок-схем.
 \tikzstyle{terminator} = [rectangle, draw, text centered, rounded corners, minimum height=2em]
 \tikzstyle{process} = [rectangle, draw, text centered, minimum height=2em]
 \tikzstyle{decision} = [diamond, draw, text centered, minimum height=2em]
@@ -37,36 +35,26 @@
 \tikzstyle{cycle}=[chamfered rectangle, draw, text centered,chamfered rectangle xsep=10pt ]
 \tikzstyle{connector} = [draw, -latex']
 
-% Убираем отступ надписи <<Оглавление>>. %
 \setlength{\cftbeforetoctitleskip}{0pt}
 \setlength{\cftaftertoctitleskip}{2pt}
-% Форматируем надпись оглавление. %
 \renewcommand{\cfttoctitlefont}{\LARGE\bfseries}
 
 \titleformat{\chapter}{\normalfont\LARGE\bfseries}{\thechapter}{20pt}{\LARGE\bfseries}
 \titlespacing*{\chapter}{0pt}{0pt}{20pt}
 
-% Настраиваем колонтикулы. %
 \pagestyle{fancy}
-% Очистить текущие заголовки и нижние колонтитулы. %
 \fancyhf{}
-% Номер страницы в центре нижнего колонтитула. %
 \fancyfoot[C]{\thepage}
-% Убрать линию между заголовком и текстом. %
 \renewcommand{\headrulewidth}{0pt}
-% Убрать линию между текстом и нижним колонтитулом. %
 \renewcommand{\footrulewidth}{0pt}
 
-% Создаем цвета. %
 \definecolor{pybg}{rgb}{0.95,0.95,0.95}
 
-% Устанавливаем необходимые поля. %
 \geometry{left=3cm}
 \geometry{right=1.5cm}
 \geometry{top=2cm}
 \geometry{bottom=2cm}
 
-% Сетапим форматирование кода в документе. %
 \newminted[mycode]{python}{
 	bgcolor=pybg,
 	baselinestretch=1.2,
@@ -75,8 +63,6 @@
 	linenos
 }
 
-% Создадим команду для отрисовки изображения. %
-% \newimage{имя_файла}{ширина}{заголовок_картинки}
 \newcommand{\includeimage}[3]{
 	\begin{figure}[H]
 		%\begin{center}
@@ -124,5 +110,7 @@
         \input{tasks/task_14} \newpage
 
         \input{tasks/task_15} \newpage
+
+        \input{conclusion} \newpage
 	\end{onehalfspacing}
 \end{document}
